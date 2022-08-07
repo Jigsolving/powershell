@@ -31,9 +31,8 @@ This script has a number of interrelated functions and a few json strings that w
 Assignment and link it to a specific OU. Sequence:
 
 1. Script is called with parameters
-2. Set-CustomUARGPO is called with Script's parameters
-3. New-CustomUARGPO is called by Set-CustomUARGPO (and subsequently utilizes helper functions)
-4. If everything is valid, GPO Is created and linked
+2. New-CustomUARGPO is called with various parameters (and subsequently utilizes helper functions)
+3. If everything is valid, GPO Is created and linked or updated.
 
 The GPO creation is achieved by:
 1. Building up a file structure in a temporary folder that resembles what the "Backup-GPO" PowerShell command creates (removing any excess info)
@@ -41,7 +40,7 @@ The GPO creation is achieved by:
       $BackupID = [guid]::NewGuid().toString().ToUpper()  - represents the GUID created by our imaginary Backup-GPO command
       $GPOGUID = [guid]::NewGuid().toString().ToUpper()   - represents the GUID from our imaginary GPO from our imaginary backup
    
-   These GUIDSs are only important during the import process and once imported a whole new set of GUIDs will be used by the directory that 
+   NOTE: These GUIDSs are only important during the import process and once imported a whole new set of GUIDs will be used by the directory that 
    received the import. 
    
 3. The $UserRightsAssignment jSON string below is used to create $GPOUserRightsAssignment.
