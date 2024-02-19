@@ -380,9 +380,6 @@ OU where this GPO should be linked
 .PARAMTER GPODescription
 Description to be added to GPO once created in ADS
 
-.PARAMETER Server
-Domain Contorller to use for AD Activities
-
 
 .NOTES
 FunctionName : New-CustomURAGPO
