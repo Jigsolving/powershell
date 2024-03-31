@@ -108,7 +108,7 @@ if (($objectComputer)) {
         # MAP AD Drive
         if (-not ((Get-PSDrive) | where-object { $_.name -eq "AD" })) {
             New-PSDrive -name AD -PSProvider ActiveDirectory -Root $ADRoot -server $DC
-            write-host mounted.
+            write-host "Mounted AD Drive."
         }
         # Get the ACL of the desired computer object      
         $ACL = Get-Acl -Path "AD:\$($objectComputer)"            
