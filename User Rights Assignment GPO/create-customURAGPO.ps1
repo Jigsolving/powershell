@@ -139,15 +139,6 @@ else {
     $script:Server = $server
 }
 
-#-------------------------------------------------------------------------------------------------
-# $UserRightsAssignment: User Rights Assignment Privileges example json
-# The following JSON lists out a few User Rights Assignments along with their description and the members to be set per right.
-# You can add any of the User Rights Assignment privileges in here in the same format
-# The description is not actually used in this example, but it COULD be used if you wanted to build a special group per right
-# as mentioned in the loop for $GPOUserRightsAssignment within the Set-CusomtURAGPO Function which could be controlled here or within the function. 
-# A full list of the User Rights Assignment Constants can be found at the end of the article here:
-# https://www.jigsolving.com/activedirectory/gpo-deep-dive-part-1
-
 Function Register-WellknownSecurityPrincipalsByNameHashTable {
 <# 
 .SYNOPSIS
@@ -527,6 +518,16 @@ if (-not($GPODescription)) {
 # The filename for the GPT File we will build for importing into the new GPO (This file contains the Guts of our GPO to deny things logging in)
 $GPTFileName = ($machineExtensions | Where-Object { $_.name -like "Security Settings" }).Location
  
+
+#-------------------------------------------------------------------------------------------------
+# $UserRightsAssignment: User Rights Assignment Privileges example json
+# The following JSON lists out a few User Rights Assignments along with their description and the members to be set per right.
+# You can add any of the User Rights Assignment privileges in here in the same format
+# The description is not actually used in this example, but it COULD be used if you wanted to build a special group per right
+# as mentioned in the loop for $GPOUserRightsAssignment within the Set-CusomtURAGPO Function which could be controlled here or within the function. 
+# A full list of the User Rights Assignment Constants can be found at the end of the article here:
+# https://www.jigsolving.com/activedirectory/gpo-deep-dive-part-1
+
 # Build The User Rights Assignments we want for our GPO
 $UserRightsAssignment = @"
 {    
