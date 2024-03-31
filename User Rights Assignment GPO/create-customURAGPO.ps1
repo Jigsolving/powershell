@@ -377,7 +377,7 @@ User Rights Assignments to be added to the GPTFile
 .PARAMETER GPOLinkOU
 OU where this GPO should be linked
 
-.PARAMTER GPODescription
+.PARAMETER GPODescription
 Description to be added to GPO once created in ADS
 
 
