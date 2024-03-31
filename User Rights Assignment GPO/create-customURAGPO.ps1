@@ -148,30 +148,6 @@ else {
 # A full list of the User Rights Assignment Constants can be found at the end of the article here:
 # https://www.jigsolving.com/activedirectory/gpo-deep-dive-part-1
 
-$script:UserRightsAssignment = @"
-{    
-    "Privileges": [{
-        "Name": "SeDenyNetworkLogonRight", "Description": "Deny access to this computer from the network",
-        "members": ["Local Account", "Guests", "Administrator","Enterprise Admins" ]
-        },{
-        "Name": "SeDenyBatchLogonRight", "Description": "Deny log on as a batch job",
-        "members": ["Guests", "Cryptographic Operators", "Backup Operators", "Administrators", "Administrator", "Print Operators",
-                     "Server Operators", "Account Operators", "Schema Admins", "Enterprise Admins"]
-        },{
-        "Name": "SeDenyServiceLogonRight", "Description": "Deny log on as a service",
-        "members": ["Guests", "Cryptographic Operators", "Backup Operators", "Administrators", "Administrator", "Print Operators",
-                     "Server Operators", "Account Operators", "Schema Admins", "Enterprise Admins"]
-        },{
-        "Name": "SeDenyInteractiveLogonRight", "Description": "Deny log on locally",
-        "members": ["Guests", "Account Operators", "Server Operators", "Schema Admins", "Enterprise Admins"]
-        },{
-        "Name": "SeDenyRemoteInteractiveLogonRight", "Description": "Deny log on through Terminal Services",
-        "members": ["Local account", "Guests", "Schema Admins", "Enterprise Admins"]    
-        }
-    ]
-}
-"@ | ConvertFrom-Json
-
 Function Register-WellknownSecurityPrincipalsByNameHashTable {
 <# 
 .SYNOPSIS
@@ -551,6 +527,31 @@ if (-not($GPODescription)) {
 # The filename for the GPT File we will build for importing into the new GPO (This file contains the Guts of our GPO to deny things logging in)
 $GPTFileName = ($machineExtensions | Where-Object { $_.name -like "Security Settings" }).Location
  
+# Build The User Rights Assignments we want for our GPO
+$UserRightsAssignment = @"
+{    
+    "Privileges": [{
+        "Name": "SeDenyNetworkLogonRight", "Description": "Deny access to this computer from the network",
+        "members": ["Local Account", "Guests", "Administrator","Enterprise Admins" ]
+        },{
+        "Name": "SeDenyBatchLogonRight", "Description": "Deny log on as a batch job",
+        "members": ["Guests", "Cryptographic Operators", "Backup Operators", "Administrators", "Administrator", "Print Operators",
+                     "Server Operators", "Account Operators", "Schema Admins", "Enterprise Admins"]
+        },{
+        "Name": "SeDenyServiceLogonRight", "Description": "Deny log on as a service",
+        "members": ["Guests", "Cryptographic Operators", "Backup Operators", "Administrators", "Administrator", "Print Operators",
+                     "Server Operators", "Account Operators", "Schema Admins", "Enterprise Admins"]
+        },{
+        "Name": "SeDenyInteractiveLogonRight", "Description": "Deny log on locally",
+        "members": ["Guests", "Account Operators", "Server Operators", "Schema Admins", "Enterprise Admins"]
+        },{
+        "Name": "SeDenyRemoteInteractiveLogonRight", "Description": "Deny log on through Terminal Services",
+        "members": ["Local account", "Guests", "Schema Admins", "Enterprise Admins"]    
+        }
+    ]
+}
+"@ | ConvertFrom-Json
+
 
 #----------------------------------------------------------------------------------------------------
 # Build GPOUserRightsAssignment
